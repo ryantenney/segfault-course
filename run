@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+# Convenience wrapper around cmake and ctest.
+#
+# Usage:
+#   ./run build                  # Configure + build all exercises
+#   ./run lesson 01-01           # Build & test course 01, lesson 01
+#   ./run exercise 01-01-ex01    # Build & test a single exercise
+#   ./run course 01              # Build & test all of course 01
+#   ./run all                    # Build & test everything
+#   ./run clean                  # Remove build directory
+
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+BUILD_DIR="$ROOT_DIR/build"
+
+# --------------------------------------------------------------------------
+# Helpers
+# --------------------------------------------------------------------------
+
+ensure_configured() {
+    if [[ ! -f "$BUILD_DIR/CMakeCache.txt" ]]; then
+        echo "-- Configuring build..."
+        cmake -S "$ROOT_DIR" -B "$BUILD_DIR" -DCMAKE_BUILD_TYPE=Debug
+    fi
+}
+
+build_target() {
+    local target="${1:-all}"
+    ensure_configured
+    cmake --build "$BUILD_DIR" --target "$target" -j "$(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)"
+}
+
+run_tests() {
+    local filter="${1:-}"
+    local args=(--test-dir "$BUILD_DIR" --output-on-failure --no-tests=ignore)
+    if [[ -n "$filter" ]]; then
+        args+=(-R "$filter")
+    fi
+    ctest "${args[@]}"
+}
+
+# --------------------------------------------------------------------------
+# Commands
+# --------------------------------------------------------------------------
+
+cmd_build() {
+    build_target
+}
+
+cmd_lesson() {
+    local lesson="$1"
+    build_target
+    run_tests "^${lesson}-"
+}
+
+cmd_exercise() {
+    local exercise="$1"
+    build_target "$exercise"
+    run_tests "^${exercise}$"
+}
+
+cmd_course() {
+    local course="$1"
+    build_target
+    run_tests "^${course}-"
+}
+
+cmd_all() {
+    build_target
+    run_tests
+}
+
+cmd_clean() {
+    echo "-- Removing $BUILD_DIR"
+    rm -rf "$BUILD_DIR"
+}
+
+# --------------------------------------------------------------------------
+# Dispatch
+# --------------------------------------------------------------------------
+
+usage() {
+    cat <<'EOF'
+Usage:
+  ./run build                  # Configure + build all exercises
+  ./run lesson 01-01           # Build & test a lesson (course-lesson)
+  ./run exercise 01-01-ex01    # Build & test a single exercise
+  ./run course 01              # Build & test all of a course
+  ./run all                    # Build & test everything
+  ./run clean                  # Remove build directory
+EOF
+}
+
+if [[ $# -lt 1 ]]; then
+    usage
+    exit 1
+fi
+
+command="$1"
+shift
+
+case "$command" in
+    build)    cmd_build ;;
+    lesson)   [[ $# -ge 1 ]] || { echo "Usage: ./run lesson <lesson-id>"; exit 1; }
+              cmd_lesson "$1" ;;
+    exercise) [[ $# -ge 1 ]] || { echo "Usage: ./run exercise <exercise-id>"; exit 1; }
+              cmd_exercise "$1" ;;
+    course)   [[ $# -ge 1 ]] || { echo "Usage: ./run course <course-id>"; exit 1; }
+              cmd_course "$1" ;;
+    all)      cmd_all ;;
+    clean)    cmd_clean ;;
+    *)        echo "Unknown command: $command"; usage; exit 1 ;;
+esac
