@@ -24,3 +24,4 @@ endfunction()
 # ---------------------------------------------------------------------------
 
 add_subdirectory(01-foundations)
+add_subdirectory(02-standard-library)
