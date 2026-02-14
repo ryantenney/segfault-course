@@ -177,6 +177,7 @@ public:
     do {                                                                      \
         bool testkit_caught_ = false;                                         \
         try { (expr); }                                                       \
+        catch (const ::testkit::not_implemented&) { throw; }                  \
         catch (const exception_type&) { testkit_caught_ = true; }             \
         catch (...) {}                                                        \
         if (!testkit_caught_) {                                               \

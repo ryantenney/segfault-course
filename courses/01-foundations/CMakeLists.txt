@@ -1,3 +1,15 @@
 # Course 01: Foundations — The C++ Mental Model
 
 add_subdirectory(01-compilation-model)
+add_subdirectory(02-namespaces)
+add_subdirectory(03-value-semantics)
+add_subdirectory(04-strings)
+add_subdirectory(05-enums)
+add_subdirectory(06-auto-and-type-deduction)
+add_subdirectory(07-structured-bindings)
+add_subdirectory(08-casts)
+add_subdirectory(09-raii)
+add_subdirectory(10-smart-pointers)
+add_subdirectory(11-move-semantics)
+add_subdirectory(12-optional-variant-expected)
+add_subdirectory(13-error-handling)
