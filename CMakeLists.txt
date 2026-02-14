@@ -14,7 +14,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # -Wno-unused-private-field: RAII stubs have members used only in destructors
 #   that students haven't implemented yet.
 # -Wno-self-move: intentional self-move tests in move-semantics exercises.
-# All three go away once students implement the function bodies.
+# -Wno-self-assign-overloaded: intentional self-assignment tests in
+#   rule-of-zero-five exercises.
+# All of these go away once students implement the function bodies.
 add_compile_options(
     -Wall
     -Wextra
@@ -23,6 +25,7 @@ add_compile_options(
     -Wno-unused-parameter
     -Wno-unused-private-field
     -Wno-self-move
+    -Wno-self-assign-overloaded
 )
 
 # ---------------------------------------------------------------------------
