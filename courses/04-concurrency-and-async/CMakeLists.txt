@@ -1,0 +1,8 @@
+add_subdirectory(35-threads-and-basic-thread-safety)
+add_subdirectory(36-mutexes-and-locks)
+add_subdirectory(37-condition-variables)
+add_subdirectory(38-atomic-operations)
+add_subdirectory(39-futures-and-async)
+add_subdirectory(40-thread-pools)
+add_subdirectory(41-coroutines-introduction)
+add_subdirectory(42-async-io-patterns)
