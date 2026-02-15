@@ -1,40 +1,18 @@
-# segfault-course: Modern C++ for Experienced Engineers
+# segfault-course
 
-A structured, exercise-driven course that takes you from "I know C" to "I write
-idiomatic modern C++." Five courses, 52 lessons, ~400 exercises. No fluff, no
-intro-to-programming warmups. You edit code, run tests, and move on.
+**A crash course in modern C++ for engineers who already know how to code.**
 
-## Who This Is For
+52 lessons. ~400 exercises. All signal, no filler. You edit code, run tests, ship understanding.
 
-Senior+ engineers who are fluent in C syntax and have shipped production code
-in at least one systems-adjacent language (C, Java, Rust, Go). You know what a
-pointer is, how a for-loop works, and how to read a compiler error. You need to
-get up to speed on modern C++ (C++17/20/23) quickly and correctly.
+---
 
-**Non-goals:** This is not an intro to programming. We don't cover basic control
-flow, what a variable is, or how to compile hello world.
+## Why This Exists
 
-## What It Covers
+You're a senior engineer fluent in C, Java, Rust, Go — or all of the above. You know what a pointer is and how to read a compiler error. You don't need another intro-to-programming course. You need modern C++ (C++17/20/23), and you need to learn it by writing code.
 
-| Course | Lessons | Exercises | Focus |
-|--------|---------|-----------|-------|
-| 1 -- Foundations | 13 | 103 | Compilation model, types, memory, ownership |
-| 2 -- Standard Library | 10 | 78 | Containers, algorithms, ranges, lambdas |
-| 3 -- Types & Generics | 11 | 88 | Classes, templates, concepts, forwarding |
-| 4 -- Concurrency | 8 | 59 | Threads, synchronization, async, coroutines |
-| 5 -- Web Patterns | 10 | 78 | Builder, middleware, serialization, HTTP modeling |
-| **Total** | **52** | **~400** | |
+**segfault-course** starts at the compilation model and builds through value semantics, RAII, move semantics, templates, concepts, concurrency, and coroutines — ending with a capstone where you build an HTTP handler framework with routing, middleware, and serialization.
 
-Exercises start small (fix a single parameter type) and grow to multi-class
-designs (HTTP handler framework with routing, middleware, and serialization).
-
-## Prerequisites
-
-- **C syntax fluency.** You can read C, understand pointers, and follow
-  header/source conventions.
-- **A C++20 compiler.** GCC 13+, Clang 16+, or MSVC 19.30+.
-- **CMake 3.20+** and Make (or Ninja).
-- **A terminal.** The `./run` script wraps cmake and ctest.
+Every concept is taught through exercises. You read the problem, write the code, run the tests.
 
 ## Quick Start
 
@@ -42,40 +20,40 @@ designs (HTTP handler framework with routing, middleware, and serialization).
 git clone <repo-url> segfault-course
 cd segfault-course
 
-./run build               # configure + build all exercises
-./run all                 # build and test everything
-
-./run lesson 01-01        # build and test a single lesson
-./run exercise 01-01-ex01 # build and test a single exercise
+./run build                # configure + build everything
+./run exercise 01-01-ex01  # build & test a single exercise
+./run lesson 01-01         # build & test all exercises in a lesson
+./run all                  # build & test the entire course
 ```
 
-First invocation auto-runs cmake configure. Subsequent runs only rebuild
-changed files.
+First run auto-configures via CMake. Subsequent runs only rebuild what changed.
 
-## How Exercises Work
+**Requirements:** A C++20 compiler (GCC 13+, Clang 16+, MSVC 19.30+), CMake 3.20+, and a terminal. No other dependencies.
 
-Every exercise file ships with scaffolding and `TODO()` markers:
+## How It Works
+
+Every exercise ships with scaffolding and `TODO()` markers:
 
 ```cpp
-// ex01.h -- Fix the parameter type
 #pragma once
 #include <string>
-#include <testkit/testkit.h>
 
-// TODO: Change the parameter to accept a const reference instead of a copy.
+// PROBLEM: Passing std::string by value makes an unnecessary copy.
+// TODO: Change the parameter to accept a const reference.
+// WHY: Const references avoid copies while preventing modification — the
+//      default way to pass "read-only" data in C++.
+
 inline std::string greet(std::string name) {
     return "Hello, " + name + "!";
 }
 ```
 
-You edit the `.h` file (or `.h` + `.cpp` pair in later lessons), then run the
-tests. The `TODO()` macro throws a "not implemented" exception that the test
-runner catches and reports as **skipped** rather than **failed**. This means
-you can build and run an entire lesson immediately -- unfinished exercises show
-as skipped, not as a wall of failures.
+Replace the `TODO()` with working code and run the tests:
 
 ```
- Lesson 01-01: const and references
+$ ./run exercise 01-01-ex01
+
+ Lesson 01-01: Compilation Model
 
   [pass] ex01 - passes string by const reference
   [pass] ex01 - does not copy the input string
@@ -86,40 +64,92 @@ as skipped, not as a wall of failures.
  3 passed, 1 failed, 2 skipped
 ```
 
-**The workflow:** edit the exercise file, run `./run exercise <id>`, read the
-test output, repeat. Each lesson README explains every exercise.
+Exercises marked `TODO()` show as **skipped**, not failed. You can build and run an entire lesson immediately — unfinished work won't drown you in red.
+
+## Curriculum
+
+### Course 1: Foundations
+
+*From "I know C" to "I write correct modern C++."*
+
+The compilation model (headers, ODR, linkage), namespaces, value semantics, const and references, strings and string\_view, enums, auto, structured bindings, casts, RAII, smart pointers, move semantics, optional/variant/expected, and error handling.
+
+**13 lessons, 103 exercises**
+
+### Course 2: The Standard Library
+
+*The containers, algorithms, and utilities you'll reach for daily.*
+
+Vectors, maps, sets, iterators, the algorithms library, ranges and views, lambdas and callables, chrono, string processing, and filesystem.
+
+**10 lessons, 78 exercises**
+
+### Course 3: Types and Generic Programming
+
+*Designing types, APIs, and writing generic code.*
+
+Classes and constructors, operator overloading (including `<=>`), inheritance, Rule of Zero/Five, function templates, class templates, concepts and constraints, type traits, constexpr, forwarding references, and CRTP.
+
+**11 lessons, 88 exercises**
+
+### Course 4: Concurrency and Async
+
+*Threading, synchronization, and modern async patterns.*
+
+Threads and `jthread`, mutexes, condition variables, atomics, futures and promises, thread pools, coroutines, and async I/O patterns.
+
+**8 lessons, 59 exercises**
+
+### Course 5: Real-World Patterns
+
+*Applying everything to production systems.*
+
+Builder pattern, type-safe configuration, middleware chains, serialization, resource pools, event systems, HTTP request/response modeling, structured logging, error propagation, and a capstone project: a complete HTTP handler framework with path-parameter routing, middleware composition, and JSON serialization.
+
+**10 lessons, 78 exercises**
+
+## Exercise Progression
+
+Exercises scale from single-line fixes to multi-class system design:
+
+| Stage | Example | Scope |
+|-------|---------|-------|
+| Early | Change a parameter from pass-by-value to const reference | 1 line |
+| Mid | Implement a generic `transform` using concepts and constraints | 10-20 lines |
+| Late | Build a thread pool with a work queue and futures | 50+ lines |
+| Capstone | HTTP handler framework with routing, middleware, serialization | Multi-file system |
 
 ## The `./run` Script
 
 ```
 ./run build                  # Configure + build all exercises
-./run lesson 01-01           # Build & test a lesson (course-lesson)
 ./run exercise 01-01-ex01    # Build & test a single exercise
-./run course 01              # Build & test all of a course
+./run lesson 01-01           # Build & test all exercises in a lesson
+./run course 01              # Build & test all exercises in a course
 ./run all                    # Build & test everything
 ./run clean                  # Remove build directory
 ```
+
+Exercise IDs follow the pattern `{course}-{lesson}-ex{number}` (e.g., `03-31-ex05` = Course 3, Lesson 31, Exercise 5).
 
 ## Project Structure
 
 ```
 segfault-course/
-  CMakeLists.txt                 # Root build config: C++20, warnings, CTest
-  run                            # Convenience script (cmake/ctest wrapper)
-  PLAN.md                        # Full curriculum design document
+  run                              # Build & test CLI (wraps cmake/ctest)
+  CMakeLists.txt                   # C++20, strict warnings, CTest
   testkit/
-    include/testkit/testkit.h    # Test framework + TODO() macro
+    include/testkit/testkit.h      # Single-header test framework
   courses/
     01-foundations/
       01-compilation-model/
-        README.md                # Lesson explanation + exercise briefs
-        ex01.h                   # Exercise file (you edit this)
-        ex01_test.cpp            # Tests (read-only)
+        README.md                  # Lesson explanation + exercise briefs
+        ex01.h                     # Exercise file (you edit this)
+        ex01_test.cpp              # Tests (read-only)
         ex02.h
         ex02_test.cpp
         ...
       02-namespaces/
-      03-value-semantics/
       ...
     02-standard-library/
     03-types-and-generics/
@@ -127,50 +157,41 @@ segfault-course/
     05-real-world-patterns/
 ```
 
-Each exercise compiles to its own executable. A syntax error in ex03 does not
-prevent ex01 and ex02 from compiling and running.
-
-## Course Overview
-
-**Course 1: Foundations -- The C++ Mental Model.**
-The bridge from "I know C" to "I can write correct modern C++." Compilation
-model, namespaces, value semantics, const, references, strings, enums, auto,
-structured bindings, casts, RAII, smart pointers, move semantics, optional/
-variant/expected, and error handling.
-
-**Course 2: The Standard Library Toolkit.**
-Practical fluency with the containers, algorithms, and utilities you reach for
-daily. Vectors, maps, sets, iterators, algorithms, ranges, lambdas, callables,
-chrono, string processing, and filesystem.
-
-**Course 3: Types and Generic Programming.**
-Designing types, APIs, and generic code. Classes, constructors, operator
-overloading, inheritance, Rule of Zero/Five, function templates, class
-templates, concepts, type traits, constexpr, forwarding references, and CRTP.
-
-**Course 4: Concurrency and Async.**
-Essential for servers. Threads, mutexes, condition variables, atomics, futures,
-thread pools, coroutines, and async I/O patterns.
-
-**Course 5: Real-World Patterns for Web Development.**
-Applying everything to patterns found in HTTP servers, API clients, and service
-infrastructure. Builder, configuration, middleware, serialization, resource
-pools, event systems, HTTP modeling, logging, error propagation, and a capstone
-HTTP handler framework.
+Each exercise compiles to its own executable. A syntax error in one exercise never blocks another from building and running.
 
 ## Test Framework
 
-The course uses `testkit`, a purpose-built single-header test framework with
-zero external dependencies. Key components:
+The course uses **testkit**, a purpose-built single-header test framework with zero external dependencies.
 
-| Component | Purpose |
-|-----------|---------|
-| `TODO()` | Placeholder for unfinished code; tests report "skipped" |
-| `TEST(runner, "name") { ... }` | Registers a test case |
-| `ASSERT_EQ(a, b)` | Equality assertion with values in error output |
-| `ASSERT_TRUE(expr)` | Boolean assertion |
-| `ASSERT_THROWS(expr, type)` | Exception assertion |
-| `TESTKIT_MAIN(runner)` | Generates `main()` |
+```cpp
+#include <testkit/testkit.h>
+
+testkit::test_runner runner;
+
+TEST(runner, "vector push_back increases size") {
+    std::vector<int> v;
+    v.push_back(42);
+    ASSERT_EQ(v.size(), 1u);
+}
+
+TEST(runner, "at() throws on out-of-bounds access") {
+    std::vector<int> v;
+    ASSERT_THROWS(v.at(0), std::out_of_range);
+}
+
+TESTKIT_MAIN(runner);
+```
+
+| Macro | Purpose |
+|-------|---------|
+| `TODO()` | Marks unfinished code; test reports "skipped" instead of "failed" |
+| `TEST(runner, "name") { ... }` | Defines a test case |
+| `ASSERT_EQ(a, b)` | Equality check with values in error output |
+| `ASSERT_NE(a, b)` | Inequality check |
+| `ASSERT_TRUE(expr)` / `ASSERT_FALSE(expr)` | Boolean assertions |
+| `ASSERT_THROWS(expr, type)` | Verifies an exception is thrown |
+| `ASSERT_NO_THROW(expr)` | Verifies no exception is thrown |
+| `TESTKIT_MAIN(runner)` | Generates `main()` with colored output |
 
 ## License
 
