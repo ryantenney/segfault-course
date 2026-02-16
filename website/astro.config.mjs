@@ -1,0 +1,111 @@
+import { defineConfig } from 'astro/config';
+import starlight from '@astrojs/starlight';
+
+export default defineConfig({
+  site: 'https://ryantenney.github.io',
+  base: '/segfault-course',
+  integrations: [
+    starlight({
+      title: 'segfault-course',
+      description: 'A crash course in modern C++ for engineers who already know how to code.',
+      social: [
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/ryantenney/segfault-course' },
+      ],
+      sidebar: [
+        {
+          label: 'Getting Started',
+          items: [
+            { label: 'Introduction', slug: '' },
+          ],
+        },
+        {
+          label: 'Course 1: Foundations',
+          collapsed: false,
+          items: [
+            { label: 'Overview', slug: '01-foundations' },
+            { label: '01 - Compilation Model', slug: '01-foundations/01-compilation-model' },
+            { label: '02 - Namespaces', slug: '01-foundations/02-namespaces' },
+            { label: '03 - Value Semantics', slug: '01-foundations/03-value-semantics' },
+            { label: '04 - Strings', slug: '01-foundations/04-strings' },
+            { label: '05 - Enums', slug: '01-foundations/05-enums' },
+            { label: '06 - Auto and Type Deduction', slug: '01-foundations/06-auto-and-type-deduction' },
+            { label: '07 - Structured Bindings', slug: '01-foundations/07-structured-bindings' },
+            { label: '08 - Casts', slug: '01-foundations/08-casts' },
+            { label: '09 - RAII', slug: '01-foundations/09-raii' },
+            { label: '10 - Smart Pointers', slug: '01-foundations/10-smart-pointers' },
+            { label: '11 - Move Semantics', slug: '01-foundations/11-move-semantics' },
+            { label: '12 - optional, variant, expected', slug: '01-foundations/12-optional-variant-expected' },
+            { label: '13 - Error Handling', slug: '01-foundations/13-error-handling' },
+          ],
+        },
+        {
+          label: 'Course 2: Standard Library',
+          collapsed: true,
+          items: [
+            { label: 'Overview', slug: '02-standard-library' },
+            { label: '14 - vector, array, span', slug: '02-standard-library/14-vector-array-span' },
+            { label: '15 - Maps and Sets', slug: '02-standard-library/15-maps-and-sets' },
+            { label: '16 - Iterators', slug: '02-standard-library/16-iterators' },
+            { label: '17 - Algorithms', slug: '02-standard-library/17-algorithms' },
+            { label: '18 - Ranges and Views', slug: '02-standard-library/18-ranges-and-views' },
+            { label: '19 - Lambdas', slug: '02-standard-library/19-lambdas' },
+            { label: '20 - function and Callables', slug: '02-standard-library/20-function-and-callables' },
+            { label: '21 - Chrono', slug: '02-standard-library/21-chrono' },
+            { label: '22 - String Processing', slug: '02-standard-library/22-string-processing' },
+            { label: '23 - Filesystem', slug: '02-standard-library/23-filesystem' },
+          ],
+        },
+        {
+          label: 'Course 3: Types and Generics',
+          collapsed: true,
+          items: [
+            { label: 'Overview', slug: '03-types-and-generics' },
+            { label: '24 - Classes and Encapsulation', slug: '03-types-and-generics/24-classes-and-encapsulation' },
+            { label: '25 - Constructors and Initialization', slug: '03-types-and-generics/25-constructors-and-initialization' },
+            { label: '26 - Operator Overloading', slug: '03-types-and-generics/26-operator-overloading' },
+            { label: '27 - Inheritance and Polymorphism', slug: '03-types-and-generics/27-inheritance-and-polymorphism' },
+            { label: '28 - Rule of Zero/Five', slug: '03-types-and-generics/28-rule-of-zero-five' },
+            { label: '29 - Function Templates', slug: '03-types-and-generics/29-function-templates' },
+            { label: '30 - Class Templates', slug: '03-types-and-generics/30-class-templates' },
+            { label: '31 - Concepts and Constraints', slug: '03-types-and-generics/31-concepts-and-constraints' },
+            { label: '32 - Type Traits and constexpr', slug: '03-types-and-generics/32-type-traits-and-constexpr' },
+            { label: '33 - Forwarding References', slug: '03-types-and-generics/33-forwarding-references' },
+            { label: '34 - CRTP and Mixins', slug: '03-types-and-generics/34-crtp-and-mixins' },
+          ],
+        },
+        {
+          label: 'Course 4: Concurrency and Async',
+          collapsed: true,
+          items: [
+            { label: 'Overview', slug: '04-concurrency-and-async' },
+            { label: '35 - Threads and Thread Safety', slug: '04-concurrency-and-async/35-threads-and-basic-thread-safety' },
+            { label: '36 - Mutexes and Locks', slug: '04-concurrency-and-async/36-mutexes-and-locks' },
+            { label: '37 - Condition Variables', slug: '04-concurrency-and-async/37-condition-variables' },
+            { label: '38 - Atomic Operations', slug: '04-concurrency-and-async/38-atomic-operations' },
+            { label: '39 - Futures and Async', slug: '04-concurrency-and-async/39-futures-and-async' },
+            { label: '40 - Thread Pools', slug: '04-concurrency-and-async/40-thread-pools' },
+            { label: '41 - Coroutines', slug: '04-concurrency-and-async/41-coroutines-introduction' },
+            { label: '42 - Async I/O Patterns', slug: '04-concurrency-and-async/42-async-io-patterns' },
+          ],
+        },
+        {
+          label: 'Course 5: Real-World Patterns',
+          collapsed: true,
+          items: [
+            { label: 'Overview', slug: '05-real-world-patterns' },
+            { label: '43 - Builder Pattern', slug: '05-real-world-patterns/43-builder-pattern' },
+            { label: '44 - Type-Safe Configuration', slug: '05-real-world-patterns/44-type-safe-configuration' },
+            { label: '45 - Middleware', slug: '05-real-world-patterns/45-middleware-and-chain-of-responsibility' },
+            { label: '46 - Serialization', slug: '05-real-world-patterns/46-serialization-and-structured-data' },
+            { label: '47 - Resource Pools', slug: '05-real-world-patterns/47-resource-pools' },
+            { label: '48 - Observer and Events', slug: '05-real-world-patterns/48-observer-and-event-system' },
+            { label: '49 - HTTP Modeling', slug: '05-real-world-patterns/49-http-request-response-modeling' },
+            { label: '50 - Logging and Diagnostics', slug: '05-real-world-patterns/50-logging-and-diagnostics' },
+            { label: '51 - Error Propagation', slug: '05-real-world-patterns/51-error-propagation-patterns' },
+            { label: '52 - Capstone: HTTP Handler', slug: '05-real-world-patterns/52-capstone-mini-http-handler' },
+          ],
+        },
+      ],
+    }),
+  ],
+});
