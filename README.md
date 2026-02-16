@@ -2,7 +2,7 @@
 
 **A crash course in modern C++ for engineers who already know how to code.**
 
-52 lessons. ~400 exercises. All signal, no filler. You edit code, run tests, ship understanding.
+52 lessons. ~400 exercises. All signal, no filler. You edit code, run tests, build fluency.
 
 ---
 
@@ -17,7 +17,7 @@ Every concept is taught through exercises. You read the problem, write the code,
 ## Quick Start
 
 ```bash
-git clone <repo-url> segfault-course
+git clone https://github.com/ryantenney/segfault-course.git
 cd segfault-course
 
 ./run build                # configure + build everything

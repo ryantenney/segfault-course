@@ -6,8 +6,8 @@ export default defineConfig({
   base: '/segfault-course',
   integrations: [
     starlight({
-      title: 'segfault-course',
-      description: 'A crash course in modern C++ for engineers who already know how to code.',
+      title: 'Segfault Course',
+      description: 'A crash course in modern C++ for seasoned engineers.',
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/ryantenney/segfault-course' },
       ],

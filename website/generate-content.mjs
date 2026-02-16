@@ -146,10 +146,10 @@ title: "segfault-course"
 description: "A crash course in modern C++ for engineers who already know how to code."
 template: splash
 hero:
-  tagline: "52 lessons. ~400 exercises. All signal, no filler. You edit code, run tests, ship understanding."
+  tagline: "52 lessons. ~400 exercises. All signal, no filler. You edit code, run tests, build fluency."
   actions:
     - text: Start Learning
-      link: /01-foundations/
+      link: 01-foundations/
       icon: right-arrow
       variant: primary
     - text: View on GitHub
